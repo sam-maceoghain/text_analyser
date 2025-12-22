@@ -48,12 +48,13 @@ if st.button("Analyse"):
             try:
            
                 # The API Call
-                # This is where we actually send data to the AI
+                # This is where the user input is sent to the AI model for processing
                 message = client.messages.create(
                     model="claude-3-haiku-20240307", 
                     max_tokens=200, 
                     messages=[
                         {
+                        # User Role & Prompt
                         "role": "user",
                         # The Prompt Engineering
                         "content": f"Analyse this job description. Briefly list:\n1. Key Skills (Technical & Soft)\n2. Required Experience (Years/Level)\n3. Top Keywords to include in my CV for the ATS.\n\nJob Description:\n{text_input}"
