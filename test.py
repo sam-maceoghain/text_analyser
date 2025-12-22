@@ -1,7 +1,6 @@
 #------------------------
 # Building a Streamlit app to analyse text input & visualise word frequency
 #------------------------
-
 import pandas as pd
 import streamlit as st
 from collections import Counter
