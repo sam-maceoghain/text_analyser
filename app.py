@@ -9,7 +9,7 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 
 # ----------------
-# 1. Setup & Configuration
+# Setup & Configuration
 # ----------------
 
 load_dotenv()
@@ -17,7 +17,7 @@ api_key = os.getenv("ANTHROPIC_API_KEY")
 client = Anthropic(api_key=api_key)
 
 # ----------------
-# 2. Interface
+# Interface
 # ----------------
 
 # Title & Description
