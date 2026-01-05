@@ -1,10 +1,9 @@
-# replacing the "Paste CV" text box with a "Drag and Drop" zone
 import os
 import streamlit as st
 from anthropic import Anthropic
 from dotenv import load_dotenv
-from pypdf import PdfReader # --> The PDF Reader
-
+### from pypdf import PdfReader
+import pdfplumber
 
 # 1. Setup & Configuration
 load_dotenv()
@@ -17,24 +16,23 @@ st.markdown("### Upload your CV to compare against selected Job Description usin
 
 col1, col2 = st.columns(2) # -->
 
-# Job Description
+# 2.1 Job Description
 with col1:
     job_text = st.text_area("Paste Job Description:", height=300)
 
-# CV Upload
+# 2.2 CV Upload
 with col2:
     uploaded_file = st.file_uploader("Upload your CV (PDF):", type=["pdf"])
 
     # Initialise empty variable
     cv_text = "" 
-
     if uploaded_file is not None:
-        try: 
-            reader = PdfReader(uploaded_file) # --> Read the PDF
-            for page in reader.pages:
-                ### cv_text += page.extract_text()
-                text = page.extract_text()
-                cv_text += text
+        # pdfplumber implementation
+        try:
+            with pdfplumber.open(uploaded_file) as pdf:
+                for page in pdf.pages:
+                    text = page.extract_text()
+                    cv_text += text
 
             # Print success message
             st.success(f"CV loaded successfully - ({len(cv_text)} characters)")
@@ -44,6 +42,11 @@ with col2:
 
         except Exception as e:
             st.error(f"Error reading PDF file: {e}")
+
+#------------------------
+# The Logic (Backend)
+#------------------------
+
 
 #------------------------
 # The Logic (Backend)
